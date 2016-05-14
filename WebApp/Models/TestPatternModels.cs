@@ -16,8 +16,7 @@ namespace WebApp.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter the number of questions")]
         public int NumberOfQuestions { get; set; }
-        [Required(ErrorMessage = "Please enter a starting time")]
-        ErrorMessage = "Invalid Date or Time")]
+        [Required(ErrorMessage = "Please enter a starting time")]       
         public DateTime Start { get; set; }
         [Required(ErrorMessage = "Please enter the ending time")]
         public DateTime End { get; set; }
