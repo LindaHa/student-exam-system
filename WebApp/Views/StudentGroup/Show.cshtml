@@ -1,0 +1,71 @@
+﻿@model BusinessLayer.DTO.StudentGroupDTO
+@{
+	ViewBag.Title = "StudentGroup Details";
+}
+
+<h2>Student-Group Details</h2>
+
+<p>
+	@Html.ActionLink("All StudentGroups", "Index")
+</p>
+<table class="table">
+
+	<tr>
+		<td>
+			<b>ID:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Id)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Code:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Code)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Test Patterns:</b>
+		</td>
+		<table class="table-bordered">
+			@foreach (var pattern in Model.TestPatterns)
+			{
+				<tr>
+					<td align="center">@pattern.Name</td>
+				</tr>
+			}
+		</table>
+	</tr>
+	<tr>
+		<td>
+			<b>Students:</b>
+		</td>
+		<td />
+		<table class="table-bordered">
+			@foreach (var student in Model.Students)
+			{
+				<tr>
+					<td align="center">@student.Id</td>
+					<td>@student.FirstName</td>
+					<td> @student.Surname</td>
+				</tr>
+			}
+		</table>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

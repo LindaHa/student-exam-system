@@ -1,0 +1,50 @@
+﻿@model BusinessLayer.DTO.AnswerDTO
+@{
+	ViewBag.Title = "Answer Details";
+}
+
+<h2>Answer Details</h2>
+
+<p>
+	@Html.ActionLink("All Answers", "Index")
+</p>
+<table class="table">
+
+	<tr>
+		<td>
+			<b>Text:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Text)
+		</td>
+	</tr>
+		
+	<tr>
+		<td>
+			<b>Is Answer Correct:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.IsCorrect)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Question:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Question.Text)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

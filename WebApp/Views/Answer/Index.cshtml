@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BusinessLayer.DTO.AnswerDTO>
+
+@{
+	ViewBag.Title = "All Answers";
+}
+
+<h2>Answers</h2>
+
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Text)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.IsCorrect)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Question)
+		</th>
+		<th>Actions</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Text)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.IsCorrect)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Question.Text)
+			</td>
+			<td>
+				@Html.ActionLink("Show Details", "Show", new { id = item.Id }) |
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+		</tr>
+	}
+
+</table>

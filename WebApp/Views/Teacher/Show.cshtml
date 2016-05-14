@@ -1,0 +1,55 @@
+﻿@model BusinessLayer.DTO.TeacherDTO
+@{
+	ViewBag.Title = "Teacher Details";
+}
+
+<h2>Teacher Details</h2>
+
+<p>
+	@Html.ActionLink("All Teachers", "Index")
+</p>
+<table class="table">
+
+	<tr>
+		<td>
+			<b>First Name:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.FirstName)
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>Surname:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Surname)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Test-Patterns:</b>
+		</td>
+		<td />
+		<table class="table-bordered">
+			@foreach (var pattern in Model.TestPatterns)
+			{
+				<tr>
+					<td align="center">@pattern.Name</td>
+				</tr>
+			}
+		</table>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

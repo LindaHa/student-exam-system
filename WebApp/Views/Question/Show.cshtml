@@ -1,0 +1,84 @@
+﻿@model BusinessLayer.DTO.QuestionDTO
+@{
+	ViewBag.Title = "Question Details";
+}
+
+<h2>Question Details</h2>
+
+<p>
+	@Html.ActionLink("All Questions", "Index")
+</p>
+<table class="table">
+
+	<tr>
+		<td>
+			<b>Text:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Text)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Points for Correct Answer:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.PointsForCorrectAnswer)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Type of Question:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.TypeOfQuestion)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Area:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Area.Name)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Explanation:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Explanation)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Answers:</b>
+		</td>
+		<td />
+		<table class="table-bordered">
+			@foreach (var answer in Model.Answers)
+			{			
+			<tr>
+				<td align="center">@answer.Text</td>
+				<td align="center" style="color: darkolivegreen; font-size: smaller">@answer.IsCorrect</td>
+			</tr>
+			}
+		</table>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

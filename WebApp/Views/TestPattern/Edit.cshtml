@@ -1,0 +1,64 @@
+﻿@model WebApp.Models.TestPatternModel
+@{
+	ViewBag.Title = "Edit Test-Pattern";
+}
+
+<h2>Edit TestPattern</h2>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Name)
+		@Html.EditorFor(model => model.Name)
+		@Html.ValidationMessageFor(model => model.Name)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.NumberOfQuestions)
+		@Html.EditorFor(model => model.NumberOfQuestions)
+		@Html.ValidationMessageFor(model => model.NumberOfQuestions)
+	</div>
+	
+	<div>
+		@Html.LabelFor(model => model.SelectedAreaId)
+		@Html.DropDownListFor(model => model.SelectedAreaId, Model.AreaItems)
+		@Html.ValidationMessageFor(model => model.SelectedAreaId)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Start)
+		@Html.TextBoxFor(model => model.Start, new
+	   {
+		   @class = "form-control",
+		   type = "date"
+	   })
+		@Html.ValidationMessageFor(model => model.Start)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.End)
+		@Html.EditorFor(model => model.End)
+		@Html.ValidationMessageFor(model => model.End)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Time)
+		@Html.EditorFor(model => model.Time)
+		@Html.ValidationMessageFor(model => model.Time)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedStudentGroupId)
+		@Html.DropDownListFor(model => model.SelectedStudentGroupId, Model.StudentGroupItems)
+		@Html.ValidationMessageFor(model => model.SelectedStudentGroupId)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedTeacherId)
+		@Html.DropDownListFor(model => model.SelectedTeacherId, Model.TeacherItems)
+		@Html.ValidationMessageFor(model => model.SelectedTeacherId)
+	</div>
+
+	<input type="submit" value="Change Test-Pattern" />
+}

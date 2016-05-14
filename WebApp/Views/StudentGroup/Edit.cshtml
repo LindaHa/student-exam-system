@@ -1,0 +1,18 @@
+﻿@model WebApp.Models.StudentGroupModel
+@{
+	ViewBag.Title = "Edit StudentGroup";
+}
+
+<h2>Edit Student-Group</h2>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Code)
+		@Html.EditorFor(model => model.Code)
+		@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+	</div>
+
+	<input type="submit" value="Change StudentGroup" />
+}

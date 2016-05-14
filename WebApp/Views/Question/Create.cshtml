@@ -1,0 +1,42 @@
+﻿@model WebApp.Models.QuestionModel
+@{
+	ViewBag.Title = "Create Question";
+}
+
+<h2>Create Question</h2>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Text)
+		@Html.EditorFor(model => model.Text)
+		@Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.PointsForCorrectAnswer)
+		@Html.EditorFor(model => model.PointsForCorrectAnswer)
+		@Html.ValidationMessageFor(model => model.PointsForCorrectAnswer, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.TypeOfQuestion)
+		@Html.DropDownListFor(model => model.TypeOfQuestion, Model.QuestionTypeItems)
+		@Html.ValidationMessageFor(model => model.TypeOfQuestion, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedAreaId)
+		@Html.DropDownListFor(model => model.SelectedAreaId, Model.AreaItems)
+		@Html.ValidationMessageFor(model => model.SelectedAreaId, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Explanation)
+		@Html.EditorFor(model => model.Explanation)
+		@Html.ValidationMessageFor(model => model.Explanation, "", new { @class = "text-danger" })
+	</div>
+
+	<input type="submit" value="Create Question" />
+}

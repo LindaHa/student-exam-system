@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BusinessLayer.DTO.StudentGroupDTO>
+
+@{
+	ViewBag.Title = "All StudentGroups";
+}
+
+<h2>Student-Groups</h2>
+
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Id)
+		</th>
+		<th>Actions</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Id)
+			</td>
+			<td>
+				@Html.ActionLink("Show Details", "Show", new { id = item.Id }) |
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+		</tr>
+	}
+
+</table>
+
+<div style="color: indianred;">
+	@Html.Raw((String)ViewBag.Warning)
+</div>

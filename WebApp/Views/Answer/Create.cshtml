@@ -1,0 +1,30 @@
+﻿@model WebApp.Models.AnswerModel
+@{
+	ViewBag.Title = "Create Answer";
+}
+
+<h2>Create Answer</h2>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Text)
+		@Html.EditorFor(model => model.Text)
+		@Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.IsCorrect)
+		@Html.DropDownListFor(model => model.IsCorrect, Model.IsCorrectItems)
+		@Html.ValidationMessageFor(model => model.IsCorrect, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedQuestionId)
+		@Html.DropDownListFor(model => model.SelectedQuestionId, Model.QuestionItems)
+		@Html.ValidationMessageFor(model => model.SelectedQuestionId, "", new { @class = "text-danger" })
+	</div>
+
+	<input type="submit" value="Create Answer" />
+}

@@ -1,0 +1,55 @@
+﻿@model BusinessLayer.DTO.StudentDTO
+@{
+	ViewBag.Title = "Student Details";
+}
+
+<h2>Student Details</h2>
+
+<p>
+	@Html.ActionLink("All Students", "Index")
+</p>
+<table class="table">
+
+	<tr>
+		<td>
+			<b>First Name:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.FirstName)
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>Surname:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Surname)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Student-Groups:</b>
+		</td>
+		<td />
+		<table class="table-bordered">
+			@foreach (var group in Model.StudentGroups)
+			{
+				<tr>
+					<td align="center">@group.Id</td>
+				</tr>
+			}
+		</table>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

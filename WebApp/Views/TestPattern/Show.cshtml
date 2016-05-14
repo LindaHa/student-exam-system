@@ -1,0 +1,96 @@
+﻿@model BusinessLayer.DTO.TestPatternDTO
+@{
+	ViewBag.Title = "Test-Pattern Details";
+}
+
+<h2>Test-Pattern Details</h2>
+
+<p>
+	@Html.ActionLink("All Test-Patterns", "Index")
+</p>
+<table class="table">
+
+	<tr>
+		<td>
+			<b>Name:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Name)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>NumberOfQuestions:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.NumberOfQuestions)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Area:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Area.Name)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Start:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Start)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>End:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.End)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Time:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Time)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>StudentGroup:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.StudentGroup.Id)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Teacher:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Teacher.Surname), 
+			@Html.DisplayFor(model => model.Teacher.FirstName)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

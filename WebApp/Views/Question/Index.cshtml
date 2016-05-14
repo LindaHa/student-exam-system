@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BusinessLayer.DTO.QuestionDTO>
+
+@{
+	ViewBag.Title = "All Questions";
+}
+
+<h2>Questions</h2>
+
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Text)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.PointsForCorrectAnswer)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.TypeOfQuestion)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Area)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Explanation)
+		</th>
+		<th>Actions</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Text)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.PointsForCorrectAnswer)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.TypeOfQuestion)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Area.Name)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Explanation)
+			</td>
+			<td>
+				@Html.ActionLink("Show Details", "Show", new { id = item.Id }) |
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+		</tr>		
+	}
+
+</table>
+
+<div style="color: indianred;">
+	@Html.Raw((String)ViewBag.Warning)
+</div>

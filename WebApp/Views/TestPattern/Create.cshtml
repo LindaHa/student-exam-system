@@ -1,0 +1,63 @@
+﻿@model WebApp.Models.TestPatternModel
+@{
+	ViewBag.Title = "Create TestPattern";
+}
+
+<h2>Create Test-Pattern</h2>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Name)
+		@Html.EditorFor(model => model.Name)
+		@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.NumberOfQuestions)
+		@Html.EditorFor(model => model.NumberOfQuestions)
+		@Html.ValidationMessageFor(model => model.NumberOfQuestions, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedAreaId)
+		@Html.DropDownListFor(model => model.SelectedAreaId, Model.AreaItems)
+		@Html.ValidationMessageFor(model => model.SelectedAreaId, "", new { @class = "text-danger" })
+	</div>
+	
+	<div>
+		@Html.LabelFor(model => model.Start)
+		@Html.EditorFor(model => model.Start)
+		@Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.End)
+		@Html.EditorFor(model => model.End)
+		@Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Time)
+		@Html.EditorFor(model => model.Time)
+		@Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedStudentGroupId)
+		@Html.DropDownListFor(model => model.SelectedStudentGroupId, Model.StudentGroupItems)
+		@Html.ValidationMessageFor(model => model.SelectedStudentGroupId, "", new { @class = "text-danger" })
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.SelectedTeacherId)
+		@Html.DropDownListFor(model => model.SelectedTeacherId, Model.TeacherItems)
+		@Html.ValidationMessageFor(model => model.SelectedTeacherId, "", new { @class = "text-danger" })
+	</div>
+
+	<input type="submit" value="Create Test-Pattern" />
+}
+
+
+

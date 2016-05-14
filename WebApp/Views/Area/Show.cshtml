@@ -1,0 +1,61 @@
+﻿@model BusinessLayer.DTO.AreaDTO
+@{
+    ViewBag.Title = "Area Details";
+}
+
+<h2>Area Details</h2>
+
+<p>
+	@Html.ActionLink("All Areas", "Index")
+</p>
+<table class="table">
+	
+	<tr>
+		<td>
+			<b>Name:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Name)
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Questions:</b>
+		</td>
+		<td/>
+		<table class="table-bordered">
+			@foreach (var question in Model.Questions)
+			{
+				<tr>
+					<td align="center">@question.Text</td>
+				</tr>
+			}
+		</table>
+	</tr>
+	<tr>
+		<td>
+			<b>TestPatterns:</b>
+		</td>
+		<td />
+		<table class="table-bordered">
+			@foreach (var pattern in Model.TestPatterns)
+			{
+				<tr>
+					<td align="center">@pattern.Name</td>
+				</tr>
+			}
+		</table>
+	</tr>
+
+	<tr>
+		<td>
+			<b>Actions:</b>
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+		</td>
+	</tr>
+
+</table>
+

@@ -1,0 +1,17 @@
+﻿@model BusinessLayer.DTO.AreaDTO
+@{
+    ViewBag.Title = "Edit Area";
+}
+
+<h2>Edit Area</h2>
+
+@using (Html.BeginForm())
+{
+	<div>
+		@Html.LabelFor(model => model.Name)
+		@Html.EditorFor(model => model.Name)
+		@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+	</div>
+
+	<input type="submit" value="Change Area" />
+}
