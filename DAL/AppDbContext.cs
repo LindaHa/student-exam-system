@@ -6,11 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.AspNet.Identity.EntityFramework;
+using DAL.IdentityEntities;
 
 namespace DAL
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
+        public AppDbContext() : base("StudentExamSystem")
+        {
+
+        }
         public DbSet<Area> Area { get; set; }
         public DbSet<Answer> Answer { get; set; }
         public DbSet<Question> Question { get; set; }
@@ -23,6 +29,7 @@ namespace DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
