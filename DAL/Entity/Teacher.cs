@@ -25,8 +25,6 @@ namespace DAL.Entity
         [Required]
         public string Surname { get; set; }
         public List<TestPattern> TestPatterns { get; set; }
-        [Required]
-        public string Password { get; set; }
 
     }
 }

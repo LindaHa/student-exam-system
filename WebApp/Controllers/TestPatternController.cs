@@ -1,5 +1,7 @@
-﻿using BusinessLayer.DTO;
+﻿using BL.Facades;
+using BusinessLayer.DTO;
 using BusinessLayer.Facades;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    //[Authorize(Roles = "teacher, admin")]
     public class TestPatternController : Controller
     {
         public TestPatternFacade testPatternFacade = new TestPatternFacade();
@@ -34,6 +37,11 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult Create(TestPatternModel testPattern)
         {
+            UserFacade userFacade = new UserFacade();
+            var user = userFacade.GetUserById
+                (Convert.ToInt32(User.Identity.GetUserId()));
+            //UserDTO currentUser = userFacade.
+            //testPattern.SelectedTeacherId <-sem pripradit id pouzivatela
             if (ModelState.IsValid)
             {
                 AreaFacade areaFacade = new AreaFacade();
@@ -43,7 +51,7 @@ namespace WebApp.Controllers
 
                 var newPattern = new TestPatternDTO();
                 newPattern.Area = areaFacade.GetAreaById(testPattern.SelectedAreaId);
-                newPattern.Teacher = teacherFacade.GetTeacherById(testPattern.SelectedTeacherId);
+                newPattern.Teacher = user.Teacher;
                 newPattern.Id = testPattern.Id;
                 newPattern.Name = testPattern.Name;
                 newPattern.NumberOfQuestions = testPattern.NumberOfQuestions;

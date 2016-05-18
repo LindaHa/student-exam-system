@@ -20,7 +20,5 @@ namespace BusinessLayer.DTO
         [Required(ErrorMessage = "Please enter your Surname")]
         public string Surname { get; set; }
         public List<TestPatternDTO> TestPatterns { get; set; }
-        [Required(ErrorMessage = "Please enter your Password")]
-        public string Password { get; set; }
     }
 }

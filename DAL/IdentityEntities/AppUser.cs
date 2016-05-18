@@ -30,9 +30,9 @@ namespace DAL.IdentityEntities
 
     public class AppUser : IdentityUser<int, AppUserLogin, AppUserRole, AppUserClaim>
     {
-        public int StudentId { set; get; }
+        public int? StudentId { set; get; }
         public Student Student { set; get; }
-        public int TeacherId { set; get; }
+        public int? TeacherId { set; get; }
         public Teacher Teacher { set; get; }
     }
 }

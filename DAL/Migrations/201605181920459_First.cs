@@ -82,7 +82,6 @@ namespace DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         FirstName = c.String(nullable: false),
                         Surname = c.String(nullable: false),
-                        Password = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -124,7 +123,6 @@ namespace DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         FirstName = c.String(nullable: false),
                         Surname = c.String(nullable: false),
-                        Password = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -156,8 +154,8 @@ namespace DAL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        StudentId = c.Int(nullable: false),
-                        TeacherId = c.Int(nullable: false),
+                        StudentId = c.Int(),
+                        TeacherId = c.Int(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

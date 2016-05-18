@@ -76,6 +76,7 @@
     <Compile Include="DTO\StudentGroupDTO.cs" />
     <Compile Include="DTO\TeacherDTO.cs" />
     <Compile Include="DTO\TestPatternDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Facades\AnswerFacade.cs" />
     <Compile Include="Facades\AreaFacade.cs" />
     <Compile Include="Facades\QuestionFacade.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Facades\StudentGroupFacade.cs" />
     <Compile Include="Facades\TeacherFacade.cs" />
     <Compile Include="Facades\TestPatternFacade.cs" />
+    <Compile Include="Facades\UserFacade.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +95,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="UserAccess\AppRoleManager.cs" />
+    <Compile Include="UserAccess\AppRoleStore.cs" />
+    <Compile Include="UserAccess\AppUserManager.cs" />
+    <Compile Include="UserAccess\AppUserStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -102,9 +108,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UserAccess\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{d03f858f-04a7-45df-be5f-5fb785228dbb}</Project>

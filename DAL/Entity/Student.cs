@@ -23,8 +23,6 @@ namespace DAL.Entity
         public string FirstName { get; set; }
         [Required]
         public string Surname { get; set; }
-        [Required]
-        public string Password { get; set; }
         public List<StudentGroup> StudentGroups { get; set; }
         public List<Solution> Solutions { get; set; }
 

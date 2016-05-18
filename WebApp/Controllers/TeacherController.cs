@@ -39,7 +39,6 @@ namespace WebApp.Controllers
                 newTeacher.FirstName = teacher.FirstName;
                 newTeacher.Surname = teacher.Surname;
                 newTeacher.Id = teacher.Id;
-                newTeacher.Password = teacher.Password;
                 newTeacher.TestPatterns = teacher.TestPatterns;
 
                 teacherFacade.CreateTeacher(newTeacher);
@@ -78,7 +77,6 @@ namespace WebApp.Controllers
                 originalTeacher.FirstName = teacher.FirstName;
                 originalTeacher.Surname = teacher.Surname;
                 originalTeacher.Id = teacher.Id;
-                originalTeacher.Password = teacher.Password;
                 originalTeacher.TestPatterns = teacher.TestPatterns;
 
                 teacherFacade.ModifyTeacher(originalTeacher);

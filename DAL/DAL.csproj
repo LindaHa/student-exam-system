@@ -68,9 +68,9 @@
     <Compile Include="Entity\Teacher.cs" />
     <Compile Include="Entity\TestPattern.cs" />
     <Compile Include="IdentityEntities\AppUser.cs" />
-    <Compile Include="Migrations\201605151413297_First.cs" />
-    <Compile Include="Migrations\201605151413297_First.Designer.cs">
-      <DependentUpon>201605151413297_First.cs</DependentUpon>
+    <Compile Include="Migrations\201605181920459_First.cs" />
+    <Compile Include="Migrations\201605181920459_First.Designer.cs">
+      <DependentUpon>201605181920459_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,8 +80,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605151413297_First.resx">
-      <DependentUpon>201605151413297_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605181920459_First.resx">
+      <DependentUpon>201605181920459_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.DTO;
 using DAL.Entity;
-
+using DAL.IdentityEntities;
 
 namespace BusinessLayer
 {
@@ -26,6 +26,8 @@ namespace BusinessLayer
                 c.CreateMap<StudentDTO, Student>().ReverseMap();
                 c.CreateMap<StudentGroupDTO, StudentGroup>().ReverseMap();
                 c.CreateMap<TestPatternDTO, TestPattern>().ReverseMap();
+
+                c.CreateMap<UserDTO, AppUser>().ReverseMap();
             });
             Mapper = config.CreateMapper();
         }
