@@ -9,6 +9,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles ="Admin, Teacher")]
     public class QuestionController : Controller
     {
         public QuestionFacade questionFacade = new QuestionFacade();

@@ -72,6 +72,7 @@
     <Compile Include="DTO\QuestionDTO.cs" />
     <Compile Include="DTO\SolutionAnswerDTO.cs" />
     <Compile Include="DTO\SolutionDTO.cs" />
+    <Compile Include="DTO\SolutionQuestionDTO.cs" />
     <Compile Include="DTO\StudentDTO.cs" />
     <Compile Include="DTO\StudentGroupDTO.cs" />
     <Compile Include="DTO\TeacherDTO.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Facades\QuestionFacade.cs" />
     <Compile Include="Facades\SolutionAnswerFacade.cs" />
     <Compile Include="Facades\SolutionFacade.cs" />
+    <Compile Include="Facades\SolutionQuestionFacade.cs" />
     <Compile Include="Facades\StudentFacade.cs" />
     <Compile Include="Facades\StudentGroupFacade.cs" />
     <Compile Include="Facades\TeacherFacade.cs" />

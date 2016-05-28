@@ -31,7 +31,7 @@ namespace BusinessLayer.Facades
             {
                 context.Database.Log = Console.WriteLine;
                 StudentGroup group = context.StudentGroup
-                    .Include(s => s.Students).Include(s => s.TestPatterns)
+                    .Include(s => s.Students).Include(s => s.TestPatterns).Include(s => s.Teacher)
                     .SingleOrDefault(s => s.Id == studentGroupId);
                 if (!code.Equals(group.Code))
                 {
@@ -49,7 +49,7 @@ namespace BusinessLayer.Facades
             {
                 context.Database.Log = Console.WriteLine;
                 StudentGroup group = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns)
+                    .Include(g => g.Students).Include(g => g.TestPatterns).Include(s => s.Teacher)
                     .SingleOrDefault(g => g.Id == studentGroupId);
                 Student student = context.Student
                     .Include(s => s.StudentGroups).Include(s => s.Solutions)
@@ -65,13 +65,14 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 StudentGroup group = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns)
+                    .Include(g => g.Students).Include(g => g.TestPatterns).Include(s => s.Teacher)
                     .SingleOrDefault(g => g.Id == studentGroupId);
                 foreach (var student in group.Students)
                     student.StudentGroups.Remove(group);
 
                 foreach (var pattern in group.TestPatterns)
                     pattern.StudentGroup = null;
+                group.Teacher.StudentGroups.Remove(group);
 
                 context.Entry(group).State = EntityState.Deleted;
                 context.SaveChanges();
@@ -93,7 +94,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var group = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns)
+                    .Include(g => g.Students).Include(g => g.TestPatterns).Include(s => s.Teacher)
                     .SingleOrDefault(g => g.Id == studentGroupId);
                 return Mapping.Mapper.Map<StudentGroupDTO>(group);
             }
@@ -104,7 +105,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var groups = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns);
+                    .Include(g => g.Students).Include(g => g.TestPatterns).Include(s => s.Teacher);
                 var results = new List<StudentGroupDTO>();
                 foreach (var group in groups)
                     results.Add(Mapping.Mapper.Map<StudentGroupDTO>(groups));
@@ -118,7 +119,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var group = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns)
+                    .Include(g => g.Students).Include(g => g.TestPatterns).Include(s => s.Teacher)
                     .Select(g => g.Students
                                 .Where(s => s.Id.Equals(studentId)));
 

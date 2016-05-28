@@ -31,7 +31,11 @@ namespace BL.Facades
             appUser.TeacherId = null;
             appUser.StudentId = null;
 
-            userManager.Create(appUser, password);
+            IdentityResult result = userManager.Create(appUser, password);
+            if (!result.Succeeded)
+            {
+                return;
+            }
 
             AppUser ourUser = userManager.FindByEmail(appUser.Email);
             if (secretCode != null)
@@ -123,7 +127,18 @@ namespace BL.Facades
             using (var context = new AppDbContext())
             {
                 AppUserManager userManager = new AppUserManager(new AppUserStore(new AppDbContext()));
-                AppUser user = userManager.FindById(userId);                
+                AppUser user = userManager.FindById(userId);
+                if (user != null)
+                {
+                    if (user.TeacherId != null || user.TeacherId != 0)
+                    {
+                        user.Teacher = context.Teacher.FirstOrDefault(t => t.Id == user.TeacherId);  
+                    }
+                    if (user.StudentId != null || user.StudentId != 0)
+                    {
+                        user.Student = context.Student.FirstOrDefault(s => s.Id == user.StudentId);
+                    }
+                }     
                 return Mapping.Mapper.Map<UserDTO>(user);
             }
         }

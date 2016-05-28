@@ -16,6 +16,7 @@ namespace DAL.Entity
         public Teacher()
         {
             TestPatterns = new List<TestPattern>();
+            StudentGroups = new List<StudentGroup>();
         }
 
         [Required]
@@ -25,6 +26,7 @@ namespace DAL.Entity
         [Required]
         public string Surname { get; set; }
         public List<TestPattern> TestPatterns { get; set; }
+        public List<StudentGroup> StudentGroups { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TeacherController : Controller
     {
         TeacherFacade teacherFacade = new TeacherFacade();
@@ -40,6 +41,7 @@ namespace WebApp.Controllers
                 newTeacher.Surname = teacher.Surname;
                 newTeacher.Id = teacher.Id;
                 newTeacher.TestPatterns = teacher.TestPatterns;
+                newTeacher.StudentGroups = teacher.StudentGroups;
 
                 teacherFacade.CreateTeacher(newTeacher);
                 return RedirectToAction("Index");
@@ -78,6 +80,7 @@ namespace WebApp.Controllers
                 originalTeacher.Surname = teacher.Surname;
                 originalTeacher.Id = teacher.Id;
                 originalTeacher.TestPatterns = teacher.TestPatterns;
+                originalTeacher.StudentGroups = teacher.StudentGroups;
 
                 teacherFacade.ModifyTeacher(originalTeacher);
 

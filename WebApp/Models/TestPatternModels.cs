@@ -28,17 +28,12 @@ namespace WebApp.Models
         public int SelectedAreaId { get; set; }
         [Display(Name = "StudentGroup")]
         public int SelectedStudentGroupId { get; set; }
-        [Required]
-        [Range(1, Int32.MaxValue, ErrorMessage = "Teacher required")]
-        [Display(Name = "Teacher")]
-        public int SelectedTeacherId { get; set; }
+        public TeacherDTO Teacher { get; set; }
 
         private AreaFacade areaFacade;
-        private TeacherFacade teacherFacade;
         public TestPatternModel()
         {
             areaFacade = new AreaFacade();
-            teacherFacade = new TeacherFacade();
         }
 
         public IEnumerable<SelectListItem> AreaItems
@@ -51,19 +46,7 @@ namespace WebApp.Models
                     Text = a.Name
                 });
             }
-        }
-
-        public IEnumerable<SelectListItem> TeacherItems
-        {
-            get
-            {
-                return teacherFacade.GetAllTeachers().Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.Surname
-                });
-            }
-        }
+        }        
 
         public IEnumerable<SelectListItem> StudentGroupItems
         {

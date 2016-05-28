@@ -12,12 +12,14 @@ namespace DAL.Entity
         public Solution()
         {
             SolutionAnswers = new List<SolutionAnswer>();
+            SolutionQuestions = new List<SolutionQuestion>();
         }
         public int Id { get; set; }
         [Required]
         public int StudentId { get; set; }
         public Student Student { get; set; }             
         public List<SolutionAnswer> SolutionAnswers { get; set; }
+        public List<SolutionQuestion> SolutionQuestions { get; set; }
         [Required]
         public int TestPatternId { get; set; }
         public TestPattern TestPattern { get; set; }        

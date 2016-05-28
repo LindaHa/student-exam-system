@@ -15,5 +15,6 @@ namespace WebApp.Models
         public string Code { get; set; }
         public List<StudentDTO> Students { get; set; }
         public List<TestPatternDTO> TestPatterns { get; set; }
+        public TeacherDTO Teacher { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using BusinessLayer.DTO;
+﻿using BL.Facades;
+using BusinessLayer.DTO;
 using BusinessLayer.Facades;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Admin, Teacher, Student")]
     public class StudentGroupController : Controller
     {
         public StudentGroupFacade studentGroupFacade = new StudentGroupFacade();
@@ -34,6 +37,9 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult Create(StudentGroupModel studentGroup)
         {
+            UserFacade userFacade = new UserFacade();
+            var user = userFacade.GetUserById
+                (Convert.ToInt32(User.Identity.GetUserId()));
             if (ModelState.IsValid)
             {
                 AreaFacade areaFacade = new AreaFacade();
@@ -43,6 +49,7 @@ namespace WebApp.Controllers
                 newStudentGroup.Code = studentGroup.Code;
                 newStudentGroup.Students = studentGroup.Students;
                 newStudentGroup.TestPatterns = studentGroup.TestPatterns;
+                newStudentGroup.Teacher = user.Teacher;
 
                 studentGroupFacade.CreateStudentGroup(newStudentGroup);
                 return RedirectToAction("Index");
@@ -71,6 +78,7 @@ namespace WebApp.Controllers
             newStudentGroup.Id = studentGroup.Id;
             newStudentGroup.Code = studentGroup.Code;
             newStudentGroup.Students = studentGroup.Students;
+            newStudentGroup.Teacher = studentGroup.Teacher;
             newStudentGroup.TestPatterns = studentGroup.TestPatterns;
 
             return View(newStudentGroup);
@@ -81,7 +89,6 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                AreaFacade areaFacade = new AreaFacade();
                 StudentGroupFacade StudentGroupFacade = new StudentGroupFacade();
 
                 var originalStudentGroup = StudentGroupFacade.GetStudentGroupById(id);

@@ -25,5 +25,7 @@ namespace DAL.Entity
         public string Code { get; set; }
         public List<Student> Students { get; set; }
         public List<TestPattern> TestPatterns { get; set; }
+        public int TeacherId { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

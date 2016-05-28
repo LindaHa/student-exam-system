@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Admin, Teacher")]
     public class AreaController : Controller
     {
         AreaFacade areaFacade = new AreaFacade();

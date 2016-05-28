@@ -13,10 +13,12 @@ namespace BusinessLayer.DTO
         public SolutionDTO()
         {
             SolutionAnswers = new List<SolutionAnswerDTO>();
+            SolutionQuestions = new List<SolutionQuestionDTO>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Please enter a Student")]
         public StudentDTO Student { get; set; }
+        public List<SolutionQuestionDTO> SolutionQuestions { get; set; }
         public List<SolutionAnswerDTO> SolutionAnswers { get; set; }
         [Required(ErrorMessage = "Please enter a Test Pattern")]
         public TestPatternDTO TestPattern { get; set; }

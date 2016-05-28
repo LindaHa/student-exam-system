@@ -12,6 +12,7 @@ namespace BusinessLayer.UserAccess
     {
         public AppUserManager(IUserStore<AppUser, int> store) : base(store)
         {
+            PasswordValidator = new MinimumLengthValidator(3);
         }
     }
 }

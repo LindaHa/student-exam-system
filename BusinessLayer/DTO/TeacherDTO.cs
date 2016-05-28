@@ -13,6 +13,7 @@ namespace BusinessLayer.DTO
         public TeacherDTO()
         {
             TestPatterns = new List<TestPatternDTO>();
+            StudentGroups = new List<StudentGroupDTO>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Please enter your First Name")]
@@ -20,5 +21,6 @@ namespace BusinessLayer.DTO
         [Required(ErrorMessage = "Please enter your Surname")]
         public string Surname { get; set; }
         public List<TestPatternDTO> TestPatterns { get; set; }
+        public List<StudentGroupDTO> StudentGroups { get; set; }
     }
 }

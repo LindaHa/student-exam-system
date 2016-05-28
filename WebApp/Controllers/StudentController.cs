@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Admin, Teacher")]
     public class StudentController : Controller
     {
         StudentFacade studentFacade = new StudentFacade();

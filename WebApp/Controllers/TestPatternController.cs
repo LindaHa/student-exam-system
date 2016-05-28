@@ -11,7 +11,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    //[Authorize(Roles = "teacher, admin")]
+    [Authorize(Roles = "Teacher, Admin")]
     public class TestPatternController : Controller
     {
         public TestPatternFacade testPatternFacade = new TestPatternFacade();
@@ -40,12 +40,9 @@ namespace WebApp.Controllers
             UserFacade userFacade = new UserFacade();
             var user = userFacade.GetUserById
                 (Convert.ToInt32(User.Identity.GetUserId()));
-            //UserDTO currentUser = userFacade.
-            //testPattern.SelectedTeacherId <-sem pripradit id pouzivatela
             if (ModelState.IsValid)
             {
                 AreaFacade areaFacade = new AreaFacade();
-                TeacherFacade teacherFacade = new TeacherFacade();
                 TestPatternFacade patternFacade = new TestPatternFacade();
                 StudentGroupFacade groupFacade = new StudentGroupFacade();
 
@@ -83,10 +80,13 @@ namespace WebApp.Controllers
 
         public ActionResult Edit(int id)
         {
+            UserFacade userFacade = new UserFacade();
+            var user = userFacade.GetUserById
+                (Convert.ToInt32(User.Identity.GetUserId()));
             var pattern = testPatternFacade.GetTestPatternById(id);
             TestPatternModel newPattern = new TestPatternModel();
             newPattern.SelectedAreaId = pattern.Area.Id;
-            newPattern.SelectedTeacherId = pattern.Teacher.Id;
+            newPattern.Teacher = user.Teacher;
             newPattern.Id = pattern.Id;
             newPattern.Name = pattern.Name;
             newPattern.NumberOfQuestions = pattern.NumberOfQuestions;
@@ -117,7 +117,7 @@ namespace WebApp.Controllers
                 originalPattern.StudentGroup = groupFacade
                     .GetStudentGroupById(testPattern.SelectedStudentGroupId);
                 originalPattern.Teacher = teacherFacade
-                    .GetTeacherById(testPattern.SelectedTeacherId);
+                    .GetTeacherById(testPattern.Teacher.Id);
                 originalPattern.Time = testPattern.Time;
 
                 patternFacade.ModifyTestPattern(originalPattern);

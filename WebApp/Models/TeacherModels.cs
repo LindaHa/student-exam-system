@@ -15,6 +15,7 @@ namespace WebApp.Models
         [Required]
         public string Surname { get; set; }
         public List<TestPatternDTO> TestPatterns { get; set; }
+        public List<StudentGroupDTO> StudentGroups { get; set; }
         [Required]
         public string Password { get; set; }
     }

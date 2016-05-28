@@ -28,13 +28,18 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var teacher = context.Teacher
-                    .Include(t => t.TestPatterns)
+                    .Include(t => t.TestPatterns).Include(t => t.StudentGroups)
                     .SingleOrDefault(t => t.Id == teacherId);
                 if (teacher.TestPatterns.Count > 0)
                 {
                     throw new InvalidOperationException
                         ("There still are data present (testPatterns)");
-                }                
+                }
+                if (teacher.StudentGroups.Count > 0)
+                {
+                    throw new InvalidOperationException
+                        ("There still are data present (studentGroups)");
+                }
 
                 context.Entry(teacher).State = EntityState.Deleted;
                 context.SaveChanges();
@@ -56,7 +61,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var teacher = context.Teacher
-                    .Include(t => t.TestPatterns)
+                    .Include(t => t.TestPatterns).Include(s => s.StudentGroups)
                     .SingleOrDefault(t => t.Id == teacherId);
                 return Mapping.Mapper.Map<TeacherDTO>(teacher);
             }
@@ -67,7 +72,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var teachers = context.Teacher
-                    .Include(t => t.TestPatterns);
+                    .Include(t => t.TestPatterns).Include(s => s.StudentGroups);
                 var results = new List<TeacherDTO>();
                 foreach (var teacher in teachers)
                     results.Add(Mapping.Mapper.Map<TeacherDTO>(teacher));
@@ -84,6 +89,17 @@ namespace BusinessLayer.Facades
                     .Include(t => t.TestPatterns)
                     .SingleOrDefault(t => t.Id == teacherId);
                 return teacher.TestPatterns.Count();
+            }
+        }
+
+        public int GetNumberOfStudentGroups(int teacherId)
+        {
+            using (var context = new AppDbContext())
+            {
+                Teacher teacher = context.Teacher
+                    .Include(t => t.StudentGroups)
+                    .SingleOrDefault(t => t.Id == teacherId);
+                return teacher.StudentGroups.Count();
             }
         }
     }

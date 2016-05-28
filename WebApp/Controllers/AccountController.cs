@@ -164,6 +164,13 @@ namespace WebApp.Controllers
                      model.UserName,
                      model.Surname,
                      model.FirstName);
+                ClaimsIdentity identity = facade.Login(model.Email, model.Password);
+                if (identity != null)
+                {
+                    AuthenticationManager.SignIn
+                        (new AuthenticationProperties() { IsPersistent = false }, identity);
+                    return RedirectToAction("Index", "Home");
+                }
 
                 return RedirectToAction("Index", "Home");
             }

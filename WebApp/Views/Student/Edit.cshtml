@@ -17,11 +17,6 @@
 		@Html.EditorFor(model => model.Surname)
 		@Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
 	</div>
-	<div>
-		@Html.LabelFor(model => model.Password)
-		@Html.EditorFor(model => model.Password)
-		@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-	</div>
 
 	<input type="submit" value="Change Student" />
 }

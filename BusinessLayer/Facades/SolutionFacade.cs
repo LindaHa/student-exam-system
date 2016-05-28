@@ -32,7 +32,7 @@ namespace BusinessLayer.Facades
                     (!solution.IsDone));
         }
 
-        public void CreateSolution(SolutionDTO solution)
+        public SolutionDTO CreateSolution(SolutionDTO solution)
         {
             var newSolution = Mapping.Mapper.Map<Solution>(solution);
             
@@ -45,6 +45,8 @@ namespace BusinessLayer.Facades
                 context.Solution.Add(newSolution);
                 context.SaveChanges();
             }
+            solution.Id = newSolution.Id;
+            return solution;
         }
         
         public int GetPoints(SolutionDTO solution)
@@ -95,6 +97,26 @@ namespace BusinessLayer.Facades
                 }
                 solution.Student.Solutions.Remove(solution);
                 context.Entry(solution).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
+        public void ModifySolution(SolutionDTO solution)
+        {
+            var newSolution = Mapping.Mapper.Map<Solution>(solution);
+            if (solution.Student.Id > 0)
+            {
+                newSolution.Student = null;
+                newSolution.StudentId = solution.Student.Id;
+            }
+            if (solution.TestPattern.Id > 0)
+            {
+                newSolution.TestPattern = null;
+                newSolution.TestPatternId = solution.TestPattern.Id;
+            }
+            using (var context = new AppDbContext())
+            {
+                context.Entry(newSolution).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

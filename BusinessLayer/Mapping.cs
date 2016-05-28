@@ -22,6 +22,7 @@ namespace BusinessLayer
                 c.CreateMap<AreaDTO, Area>().ReverseMap();
                 c.CreateMap<QuestionDTO, Question>().ReverseMap();
                 c.CreateMap<SolutionDTO, Solution>().ReverseMap();
+                c.CreateMap<SolutionQuestionDTO, SolutionQuestion>().ReverseMap();
                 c.CreateMap<SolutionAnswerDTO, SolutionAnswer>().ReverseMap();
                 c.CreateMap<StudentDTO, Student>().ReverseMap();
                 c.CreateMap<StudentGroupDTO, StudentGroup>().ReverseMap();
