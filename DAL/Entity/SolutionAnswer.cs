@@ -12,8 +12,10 @@ namespace DAL.Entity
         [Required]
         public int Id { get; set; }
         [Required]
+        public int AnswerId { get; set; }
         public Answer Answer { get; set; }
         [Required]
+        public int SolutionId { get; set; }
         public Solution Solution { get; set; }
     }
 }

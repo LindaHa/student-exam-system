@@ -1,0 +1,37 @@
+﻿@model WebApp.Models.SolutionModel
+@{
+	ViewBag.Title = "Start Test";
+}
+
+<h2>Start Test</h2>
+
+@Html.AntiForgeryToken()
+<table class="table">
+	@for (int i = 0; i < Model.Questions.Count; i++)
+	{
+		<tr>
+			<td align="center">
+				<b>Question:</b>@Model.Questions[i].Text
+				<table class="table-bordered">
+					@for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
+					{
+						if (Model.Questions[i].TypeOfQuestion.Equals("single"))
+						{
+							<tr>
+								<td>
+									@Html.RadioButtonFor(m => m.Questions[i].SelectedAnswerID, Model.Questions[i].Answers[j].Id, new { id = "a" + Model.Questions[i].Answers[j].Id })
+									<label for="a@Model.Questions[i].Answers[j].Id">@Model.Questions[i].Answers[j].Text</label>
+								</td>
+							</tr>
+						}
+						else {
+							@Html.CheckBoxFor(m => m.Questions[i].Answers[j].isSelected)
+							<label>@Model.Questions[i].Answers[j].Text</label>
+						}
+					}
+				</table>
+			</td>
+		</tr>
+	}
+</table>
+				

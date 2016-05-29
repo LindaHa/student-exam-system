@@ -11,22 +11,35 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [Authorize(Roles = "Student")]
-    public class AolutionController : Controller
+    [Authorize(Roles = "Student, Admin")]
+    public class SolutionController : Controller
     {
         public SolutionFacade solutionFacade = new SolutionFacade();
+
+        public ActionResult Index()
+        {
+            ViewBag.Warning = TempData["SolutionTextWarning"];
+            TestPatternFacade tpf = new TestPatternFacade();
+            List<TestPatternDTO> testPatterns = new List<TestPatternDTO>();
+
+            UserFacade uf = new UserFacade();
+            var user = uf.GetUserById
+                (Convert.ToInt32(User.Identity.GetUserId()));
+
+            StudentFacade sf = new StudentFacade();
+            List<StudentGroupDTO> studentGroups = sf.GetStudentStudentGroups(user.Student.Id);
+            foreach(StudentGroupDTO studentGroup in studentGroups)
+            {
+                testPatterns.AddRange(tpf.GetTestPatternsByGroup(studentGroup.Id));
+            }
+
+            return View(testPatterns);
+        }
 
         public ActionResult Show(int id)
         {
             SolutionDTO solution = solutionFacade.GetSolutionById(id);
             return View(solution);
-        }
-
-        public ActionResult Index()
-        {
-            ViewBag.Warning = TempData["SolutionTextWarning"];
-            var model = solutionFacade.GetAllSolutions();
-            return View(model);
         }
 
         public ActionResult Create(int testPatternId)
@@ -46,36 +59,46 @@ namespace WebApp.Controllers
             var newSolution = new SolutionDTO();
             newSolution.End = end;
             newSolution.Student = user.Student;
-            newSolution.IsDone = false;
             newSolution.Points = 0;
-            newSolution.Start = DateTime.Now;
             newSolution.TestPattern = pattern;
 
             newSolution = solutionFacade.CreateSolution(newSolution);
+
+            SolutionModel solutionModel = new SolutionModel();
+            solutionModel.Id = newSolution.Id;
 
             foreach (QuestionDTO question in generatedQuestions)
             {
                 SolutionQuestionDTO solutionQuestion = new SolutionQuestionDTO();
                 solutionQuestion.Question = question;
                 solutionQuestion.Solution = newSolution;
-                newSolution.SolutionQuestions = generatedQuestions;
+                newSolution.SolutionQuestions.Add(solutionQuestion);
+
+                SolutionQuestionModel sqm = new SolutionQuestionModel();
+                sqm.Id = question.Id;
+                sqm.Text = question.Text;
+                sqm.TypeOfQuestion = question.TypeOfQuestion;
+                sqm.Explanation = question.Explanation;
+                foreach(AnswerDTO answer in question.Answers)
+                {
+                    SolutionAnswerModel sam = new SolutionAnswerModel();
+                    sam.Id = answer.Id;
+                    sam.Text = answer.Text;
+                    sqm.Answers.Add(sam);
+                }
+                solutionModel.Questions.Add(sqm);
             }
             
-            return View(solution);
+            return View(solutionModel);
         }
 
         [HttpPost]
-        public ActionResult Create(SolutionDTO solution)
-        {            
-            if (ModelState.IsValid)
-            {
-                TestPatternFacade testPatternFacade = new TestPatternFacade();
-
-                
-
-                solutionFacade.CreateSolution(newSolution);
-                return RedirectToAction("Index");
-            }
+        public ActionResult Create(SolutionModel solution)
+        {
+            SolutionDTO mySolution = solutionFacade.GetSolutionById(solution.Id);
+            //mySolution.Points = solutionFacade.GetPoints(solution);
+            mySolution.End = DateTime.Now;
+            mySolution.IsDone = true;
             return View(solution);
         }
 

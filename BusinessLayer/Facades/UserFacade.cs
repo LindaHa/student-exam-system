@@ -38,11 +38,11 @@ namespace BL.Facades
             }
 
             AppUser ourUser = userManager.FindByEmail(appUser.Email);
+            AppRoleManager roleManager = new AppRoleManager(new AppRoleStore(new AppDbContext()));
             if (secretCode != null)
             {
                 if (secretCode.Equals("Admin"))
                 {
-                    AppRoleManager roleManager = new AppRoleManager(new AppRoleStore(new AppDbContext()));
                     if (!roleManager.RoleExists("Admin"))
                         roleManager.Create(new AppRole { Name = "Admin" });
 
@@ -67,7 +67,6 @@ namespace BL.Facades
                 }
                 else if (secretCode.Equals("Teacher"))
                 {
-                    AppRoleManager roleManager = new AppRoleManager(new AppRoleStore(new AppDbContext()));
                     if (!roleManager.RoleExists("Teacher"))
                     {
                         roleManager.Create(new AppRole { Name = "Teacher" });
@@ -86,7 +85,10 @@ namespace BL.Facades
                 }
             }
             else
-            {
+            {                
+                if (!roleManager.RoleExists("Student"))
+                    roleManager.Create(new AppRole { Name = "Student" });
+                userManager.AddToRole(ourUser.Id, "Student");
                 Student student = new Student();
                 student.Surname = surname;
                 student.FirstName = firstName;

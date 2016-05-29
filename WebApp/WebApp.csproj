@@ -218,6 +218,7 @@
     <Compile Include="Models\StudentGroupModels.cs" />
     <Compile Include="Models\StudentModels.cs" />
     <Compile Include="Models\TeacherModels.cs" />
+    <Compile Include="Models\SolutionModels.cs" />
     <Compile Include="Models\TestPatternModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -310,9 +311,9 @@
     <Content Include="Views\StudentGroup\Index.cshtml" />
     <Content Include="Views\StudentGroup\Create.cshtml" />
     <Content Include="Views\StudentGroup\Edit.cshtml" />
-    <Content Include="Views\Aolution\Show.cshtml" />
-    <Content Include="Views\Aolution\Index.cshtml" />
-    <Content Include="Views\Aolution\Create.cshtml" />
+    <Content Include="Views\Solution\Show.cshtml" />
+    <Content Include="Views\Solution\Index.cshtml" />
+    <Content Include="Views\Solution\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -67,6 +67,19 @@ namespace BusinessLayer.Facades
             }
         }
 
+        public List<StudentGroupDTO> GetStudentStudentGroups(int studentId)
+        {
+            using (var context = new AppDbContext())
+            {
+                Student student = context.Student
+                        .Where(s => s.Id == studentId)
+                        .Include(s => s.StudentGroups)
+                        .FirstOrDefault();
+
+                return Mapping.Mapper.Map<List<StudentGroupDTO>>(student.StudentGroups);
+            }
+        }
+
         public List<StudentDTO> GetAllStudents()
         {
             using (var context = new AppDbContext())

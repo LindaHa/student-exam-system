@@ -9,6 +9,8 @@ namespace DAL.Entity
 {
     public class SolutionQuestion
     {
+        [Required]
+        public int Id { get; set; }
         public Question Question { get; set; }
         [Required]
         public int QuestionId { get; set; }

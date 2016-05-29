@@ -119,12 +119,13 @@ namespace BusinessLayer.Facades
                     .Include(p => p.Teacher)
                     .Include(p => p.Area)
                     .Include(p => p.Area.Questions)
+                    .Include(p => p.Area.Questions.Select(q => q.Answers))
                     .SingleOrDefault(x => x.Id == testPatternId);
                 int neededQuestions = pattern.NumberOfQuestions;
-                var questions = pattern.Area.Questions;
+                List<Question> questions = pattern.Area.Questions;
                 var test = new List<QuestionDTO>();
 
-                var results = questions.OrderBy(x => (new Random()).Next())
+                var results = questions.OrderBy(x => (new Random()).Next())                    
                     .Take(neededQuestions < questions.Count() ? neededQuestions : questions.Count());
 
                 //return Mapping.Mapper.Map <List<QuestionDTO>>(results);

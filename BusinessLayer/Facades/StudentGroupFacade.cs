@@ -113,18 +113,5 @@ namespace BusinessLayer.Facades
                 return results;
             }
         }
-
-        public StudentGroupDTO GetStudentGroupByStudent(int studentId)
-        {
-            using (var context = new AppDbContext())
-            {
-                var group = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns).Include(s => s.Teacher)
-                    .Select(g => g.Students
-                                .Where(s => s.Id.Equals(studentId)));
-
-                return Mapping.Mapper.Map<StudentGroupDTO>(group);
-            }
-        }
     }
 }
