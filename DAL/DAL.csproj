@@ -62,6 +62,7 @@
     <Compile Include="Entity\Area.cs" />
     <Compile Include="Entity\Question.cs" />
     <Compile Include="Entity\Solution.cs" />
+    <Compile Include="Entity\Enrollment.cs" />
     <Compile Include="Entity\SolutionAnswer.cs" />
     <Compile Include="Entity\SolutionQuestion.cs" />
     <Compile Include="Entity\Student.cs" />
@@ -69,9 +70,9 @@
     <Compile Include="Entity\Teacher.cs" />
     <Compile Include="Entity\TestPattern.cs" />
     <Compile Include="IdentityEntities\AppUser.cs" />
-    <Compile Include="Migrations\201605290058294_First.cs" />
-    <Compile Include="Migrations\201605290058294_First.Designer.cs">
-      <DependentUpon>201605290058294_First.cs</DependentUpon>
+    <Compile Include="Migrations\201605292049153_First.cs" />
+    <Compile Include="Migrations\201605292049153_First.Designer.cs">
+      <DependentUpon>201605292049153_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,8 +82,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605290058294_First.resx">
-      <DependentUpon>201605290058294_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605292049153_First.resx">
+      <DependentUpon>201605292049153_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

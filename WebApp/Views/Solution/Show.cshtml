@@ -1,7 +1,72 @@
-﻿
+﻿@model WebApp.Models.SolutionModel
 @{
-    ViewBag.Title = "Show";
+	ViewBag.Title = "Solution Details";
 }
 
-<h2>Show</h2>
+<h2>Solution Details</h2>
+
+<p>
+	@Html.ActionLink("All Tests to be Done", "Index")
+	@Html.ActionLink("All Finished Tests", "IndexDone")
+</p>
+
+<table class="table">
+		
+	<tr>
+		<td>
+			<b>Points:</b>
+		</td>
+		<td>
+			@Html.Raw(Model.Points)
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>Start:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.Start)
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>End:</b>
+		</td>
+		<td>
+			@Html.DisplayFor(model => model.End)
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="table-bordered">
+				@for (int i = 0; i < Model.Questions.Count; i++)
+				{
+					<tr>
+						<td>@Model.Questions[i].Text</td>
+					</tr>
+					<tr>							
+						<td>
+							<table class="table-bordered">
+								@for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
+								{
+									<tr>
+										<td>
+											@Html.DisplayFor(modelItem => modelItem.Questions[i].Answers[j].isCorrect)
+										</td>
+										<td style="font-weight:@if (Model.Questions[i].Answers[j].isSelected)
+										{ @Html.Raw("bold") }
+										else { @Html.Raw("normal") };">
+											@Model.Questions[i].Answers[j].Text
+										</td>
+									</tr>
+								}
+							</table>
+						</td>
+					</tr>
+				}
+			</table>
+		</td>
+	</tr>
+</table>
+
 

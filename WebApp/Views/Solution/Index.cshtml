@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BusinessLayer.DTO.TestPatternDTO>
 
 @{
-	ViewBag.Title = "All Test-Patterns";
+	ViewBag.Title = "All Tests";
 }
 
 <h2>Choose Test</h2>
@@ -63,7 +63,7 @@
 				@Html.DisplayFor(modelItem => item.Teacher)
 			</td>
 			<td>
-				@Html.ActionLink("Start Solving", "Solution", "Show", new { id = item.Id })
+				@Html.ActionLink("Start Solving", "Create", new { id = item.Id })
 			</td>
 		</tr>
 	}

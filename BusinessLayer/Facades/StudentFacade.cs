@@ -28,17 +28,17 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var student = context.Student
-                    .Include(s => s.Solutions).Include(s => s.StudentGroups)
+                    .Include(s => s.Solutions).Include(s => s.Enrollments)
                     .SingleOrDefault(s => s.Id == studentId);
                 if(student.Solutions.Count > 0)
                 {
                     throw new InvalidOperationException
                         ("There still are data present (solutions)");
                 }
-                if (student.StudentGroups != null)
+                if (student.Enrollments != null)
                 {
-                    foreach(var group in student.StudentGroups)
-                        group.Students.Remove(student);                    
+                    foreach(var enrollment in student.Enrollments)
+                        context.Entry(enrollment).State = EntityState.Deleted;
                 }
 
                 context.Entry(student).State = EntityState.Deleted;
@@ -61,7 +61,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var student = context.Student
-                    .Include(s => s.Solutions).Include(s => s.StudentGroups)
+                    .Include(s => s.Solutions).Include(s => s.Enrollments)
                     .SingleOrDefault(s => s.Id == studentId);
                 return Mapping.Mapper.Map<StudentDTO>(student);
             }
@@ -71,12 +71,13 @@ namespace BusinessLayer.Facades
         {
             using (var context = new AppDbContext())
             {
-                Student student = context.Student
-                        .Where(s => s.Id == studentId)
-                        .Include(s => s.StudentGroups)
-                        .FirstOrDefault();
+                var enrollments = context.Enrollment.Include(e => e.StudentGroup).Where(e => e.StudentId == studentId);
 
-                return Mapping.Mapper.Map<List<StudentGroupDTO>>(student.StudentGroups);
+                List<StudentGroupDTO> studentGroups = new List<StudentGroupDTO>();
+                foreach (var enrollment in enrollments)
+                    studentGroups.Add(Mapping.Mapper.Map<StudentGroupDTO>(enrollment.StudentGroup));
+
+                return studentGroups;
             }
         }
 
@@ -85,7 +86,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 var students = context.Student
-                    .Include(s => s.Solutions).Include(s => s.StudentGroups);
+                    .Include(s => s.Solutions);
                 var results = new List<StudentDTO>();
                 foreach (var student in students)
                     results.Add(Mapping.Mapper.Map<StudentDTO>(student));
@@ -95,20 +96,19 @@ namespace BusinessLayer.Facades
 
         public void AddStudentGroup(int studentGroupId, StudentDTO student, string code)
         {
-            var newStudent = Mapping.Mapper.Map<Student>(student);
+            Enrollment enrollment = new Enrollment();
+            enrollment.StudentGroupId = studentGroupId;
+            enrollment.StudentId = student.Id;
 
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var group = context.StudentGroup
-                    .Include(s => s.TestPatterns).Include(s => s.Students)
-                    .SingleOrDefault(s => s.Id == studentGroupId);
+                var group = context.StudentGroup.SingleOrDefault(g => g.Id == studentGroupId);
                 if (!code.Equals(group.Code))
                 {
                     throw new InvalidOperationException("Invalid Code");
                 }
-                group.Students.Add(newStudent);
-                newStudent.StudentGroups.Add(group);
+                context.Enrollment.Add(enrollment);
                 context.SaveChanges();
             }
         }
@@ -118,14 +118,8 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var group = context.StudentGroup
-                    .Include(g => g.Students).Include(g => g.TestPatterns)
-                    .SingleOrDefault(g => g.Id == studentGroupId);
-                var student = context.Student
-                    .Include(s => s.Solutions).Include(s => s.StudentGroups)
-                    .SingleOrDefault(s => s.Id == studentId);
-                group.Students.Remove(student);
-                student.StudentGroups.Remove(group);
+                var enrollment = context.Enrollment.SingleOrDefault(s => s.StudentGroupId == studentGroupId && s.StudentId == studentId);
+                context.Entry(enrollment).State = EntityState.Deleted;
                 context.SaveChanges();
             }
         }

@@ -132,11 +132,11 @@ namespace BL.Facades
                 AppUser user = userManager.FindById(userId);
                 if (user != null)
                 {
-                    if (user.TeacherId != null || user.TeacherId != 0)
+                    if (user.TeacherId != null && user.TeacherId != 0)
                     {
                         user.Teacher = context.Teacher.FirstOrDefault(t => t.Id == user.TeacherId);  
                     }
-                    if (user.StudentId != null || user.StudentId != 0)
+                    if (user.StudentId != null && user.StudentId != 0)
                     {
                         user.Student = context.Student.FirstOrDefault(s => s.Id == user.StudentId);
                     }

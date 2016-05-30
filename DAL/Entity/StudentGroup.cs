@@ -16,14 +16,14 @@ namespace DAL.Entity
     {
         public StudentGroup()
         {
-            Students = new List<Student>();
+            Enrollments = new List<Enrollment>();
             TestPatterns = new List<TestPattern>();
         }
         [Required]
         public int Id { get; set; }
         [Required]
         public string Code { get; set; }
-        public List<Student> Students { get; set; }
+        public List<Enrollment> Enrollments { get; set; }
         public List<TestPattern> TestPatterns { get; set; }
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }

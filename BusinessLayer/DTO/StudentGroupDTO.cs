@@ -12,14 +12,13 @@ namespace BusinessLayer.DTO
     {
         public StudentGroupDTO()
         {
-            Students = new List<StudentDTO>();
+            Enrollments = new List<EnrollmentDTO>();
             TestPatterns = new List<TestPatternDTO>();
         }
-        [Required]
         public int Id { get; set; }
         [Required]
         public string Code { get; set; }
-        public List<StudentDTO> Students { get; set; }
+        public List<EnrollmentDTO> Enrollments { get; set; }
         public List<TestPatternDTO> TestPatterns { get; set; }
         public TeacherDTO Teacher { get; set; }
     }

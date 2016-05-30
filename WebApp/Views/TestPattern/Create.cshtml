@@ -50,12 +50,6 @@
 		@Html.ValidationMessageFor(model => model.SelectedStudentGroupId, "", new { @class = "text-danger" })
 	</div>
 
-	<div>
-		@Html.LabelFor(model => model.SelectedTeacherId)
-		@Html.DropDownListFor(model => model.SelectedTeacherId, Model.TeacherItems)
-		@Html.ValidationMessageFor(model => model.SelectedTeacherId, "", new { @class = "text-danger" })
-	</div>
-
 	<input type="submit" value="Create Test-Pattern" />
 }
 

@@ -27,6 +27,7 @@ namespace DAL
         public DbSet<Solution> Solution { get; set; }
         public DbSet<SolutionAnswer> SolutionAnswer { get; set; }
         public DbSet<SolutionQuestion> SolutionQuestion { get; set; }
+        public DbSet<Enrollment> Enrollment { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

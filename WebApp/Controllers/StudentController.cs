@@ -40,7 +40,6 @@ namespace WebApp.Controllers
                 newStudent.FirstName = student.FirstName;
                 newStudent.Surname = student.Surname;
                 newStudent.Id = student.Id;
-                newStudent.StudentGroups = student.StudentGroups;
                 newStudent.Solutions = student.Solutions;
 
                 studentFacade.CreateStudent(newStudent);
@@ -79,7 +78,6 @@ namespace WebApp.Controllers
                 originalStudent.FirstName = student.FirstName;
                 originalStudent.Surname = student.Surname;
                 originalStudent.Id = student.Id;
-                originalStudent.StudentGroups = student.StudentGroups;
                 originalStudent.Solutions = student.Solutions;
 
                 studentFacade.ModifyStudent(originalStudent);

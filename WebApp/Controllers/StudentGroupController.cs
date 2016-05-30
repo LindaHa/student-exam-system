@@ -11,17 +11,43 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [Authorize(Roles = "Admin, Teacher, Student")]
+    [Authorize]
     public class StudentGroupController : Controller
     {
         public StudentGroupFacade studentGroupFacade = new StudentGroupFacade();
 
+        [Authorize(Roles = "Admin, Student, Teacher")]
         public ActionResult Show(int id)
         {
             var studentGroup = studentGroupFacade.GetStudentGroupById(id);
+            studentGroup.Code = "";
             return View(studentGroup);
         }
 
+        [Authorize(Roles = "Admin, Student")]
+        [HttpPost]
+        public ActionResult Show(int id, StudentGroupDTO studentGroup)
+        {
+            UserFacade userFacade = new UserFacade();
+            UserDTO user = userFacade.GetUserById
+                (Convert.ToInt32(User.Identity.GetUserId()));
+            StudentDTO student = user.Student;
+            StudentGroupDTO myStudentGroup = studentGroupFacade.GetStudentGroupById(id);
+
+            try {
+                studentGroupFacade.AddStudent(id, student, studentGroup.Code);
+                TempData["SolutionTextWarning"] = "You are in!";
+                return RedirectToAction("Index", "Solution");
+            }
+            catch(InvalidOperationException e)
+            {
+                myStudentGroup.Code = "";
+                ModelState.AddModelError("Code", e.Message);
+                return View(myStudentGroup);
+            }
+        }
+
+        [Authorize(Roles = "Admin, Student, Teacher")]
         public ActionResult Index()
         {
             ViewBag.Warning = TempData["StudentGroupTextWarning"];
@@ -29,11 +55,13 @@ namespace WebApp.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult Create()
         {
             return View(new StudentGroupModel());
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
         [HttpPost]
         public ActionResult Create(StudentGroupModel studentGroup)
         {
@@ -47,7 +75,6 @@ namespace WebApp.Controllers
                 var newStudentGroup = new StudentGroupDTO();
                 newStudentGroup.Id = studentGroup.Id;
                 newStudentGroup.Code = studentGroup.Code;
-                newStudentGroup.Students = studentGroup.Students;
                 newStudentGroup.TestPatterns = studentGroup.TestPatterns;
                 newStudentGroup.Teacher = user.Teacher;
 
@@ -57,6 +84,7 @@ namespace WebApp.Controllers
             return View(studentGroup);
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult Delete(int id)
         {
             try
@@ -71,36 +99,34 @@ namespace WebApp.Controllers
         }
 
 
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult Edit(int id)
         {
             var studentGroup = studentGroupFacade.GetStudentGroupById(id);
             StudentGroupModel newStudentGroup = new StudentGroupModel();
             newStudentGroup.Id = studentGroup.Id;
             newStudentGroup.Code = studentGroup.Code;
-            newStudentGroup.Students = studentGroup.Students;
             newStudentGroup.Teacher = studentGroup.Teacher;
             newStudentGroup.TestPatterns = studentGroup.TestPatterns;
 
             return View(newStudentGroup);
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
         [HttpPost]
         public ActionResult Edit(int id, StudentGroupModel studentGroup)
         {
             if (ModelState.IsValid)
             {
-                StudentGroupFacade StudentGroupFacade = new StudentGroupFacade();
-
-                var originalStudentGroup = StudentGroupFacade.GetStudentGroupById(id);
+                var originalStudentGroup = studentGroupFacade.GetStudentGroupById(id);
                 originalStudentGroup.Id = studentGroup.Id;
-                originalStudentGroup.Students = studentGroup.Students;
                 originalStudentGroup.TestPatterns = studentGroup.TestPatterns;
 
-                StudentGroupFacade.ModifyStudentGroup(originalStudentGroup);
+                studentGroupFacade.ModifyStudentGroup(originalStudentGroup);
 
                 return RedirectToAction("Show", new { id = originalStudentGroup.Id });
             }
             return View(studentGroup);
-        }
+        }        
     }
 }

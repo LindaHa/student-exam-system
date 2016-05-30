@@ -26,6 +26,7 @@ namespace BusinessLayer
                 c.CreateMap<SolutionAnswerDTO, SolutionAnswer>().ReverseMap();
                 c.CreateMap<StudentDTO, Student>().ReverseMap();
                 c.CreateMap<StudentGroupDTO, StudentGroup>().ReverseMap();
+                c.CreateMap<EnrollmentDTO, Enrollment>().ReverseMap();
                 c.CreateMap<TestPatternDTO, TestPattern>().ReverseMap();
 
                 c.CreateMap<UserDTO, AppUser>().ReverseMap();

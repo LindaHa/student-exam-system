@@ -456,7 +456,7 @@ namespace WebApp.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
-        }
+        }        
 
         internal class ChallengeResult : HttpUnauthorizedResult
         {
@@ -487,5 +487,7 @@ namespace WebApp.Controllers
             }
         }
         #endregion
+
+
     }
 }

@@ -79,6 +79,20 @@ namespace DAL.Migrations
                 .Index(t => t.TeacherId);
             
             CreateTable(
+                "dbo.Enrollments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        StudentId = c.Int(nullable: false),
+                        StudentGroupId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Students", t => t.StudentId)
+                .ForeignKey("dbo.StudentGroups", t => t.StudentGroupId)
+                .Index(t => t.StudentId)
+                .Index(t => t.StudentGroupId);
+            
+            CreateTable(
                 "dbo.Students",
                 c => new
                     {
@@ -217,19 +231,6 @@ namespace DAL.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
                 .Index(t => t.UserId);
             
-            CreateTable(
-                "dbo.StudentStudentGroups",
-                c => new
-                    {
-                        Student_Id = c.Int(nullable: false),
-                        StudentGroup_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Student_Id, t.StudentGroup_Id })
-                .ForeignKey("dbo.Students", t => t.Student_Id, cascadeDelete: true)
-                .ForeignKey("dbo.StudentGroups", t => t.StudentGroup_Id, cascadeDelete: true)
-                .Index(t => t.Student_Id)
-                .Index(t => t.StudentGroup_Id);
-            
         }
         
         public override void Down()
@@ -243,19 +244,17 @@ namespace DAL.Migrations
             DropForeignKey("dbo.TestPatterns", "StudentGroupId", "dbo.StudentGroups");
             DropForeignKey("dbo.TestPatterns", "TeacherId", "dbo.Teachers");
             DropForeignKey("dbo.StudentGroups", "TeacherId", "dbo.Teachers");
-            DropForeignKey("dbo.StudentStudentGroups", "StudentGroup_Id", "dbo.StudentGroups");
-            DropForeignKey("dbo.StudentStudentGroups", "Student_Id", "dbo.Students");
+            DropForeignKey("dbo.Enrollments", "StudentGroupId", "dbo.StudentGroups");
             DropForeignKey("dbo.Solutions", "TestPatternId", "dbo.TestPatterns");
             DropForeignKey("dbo.Solutions", "StudentId", "dbo.Students");
             DropForeignKey("dbo.SolutionQuestions", "SolutionId", "dbo.Solutions");
             DropForeignKey("dbo.SolutionQuestions", "QuestionId", "dbo.Questions");
             DropForeignKey("dbo.SolutionAnswers", "SolutionId", "dbo.Solutions");
             DropForeignKey("dbo.SolutionAnswers", "AnswerId", "dbo.Answers");
+            DropForeignKey("dbo.Enrollments", "StudentId", "dbo.Students");
             DropForeignKey("dbo.TestPatterns", "AreaId", "dbo.Areas");
             DropForeignKey("dbo.Questions", "AreaId", "dbo.Areas");
             DropForeignKey("dbo.Answers", "QuestionId", "dbo.Questions");
-            DropIndex("dbo.StudentStudentGroups", new[] { "StudentGroup_Id" });
-            DropIndex("dbo.StudentStudentGroups", new[] { "Student_Id" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -270,13 +269,14 @@ namespace DAL.Migrations
             DropIndex("dbo.SolutionAnswers", new[] { "AnswerId" });
             DropIndex("dbo.Solutions", new[] { "TestPatternId" });
             DropIndex("dbo.Solutions", new[] { "StudentId" });
+            DropIndex("dbo.Enrollments", new[] { "StudentGroupId" });
+            DropIndex("dbo.Enrollments", new[] { "StudentId" });
             DropIndex("dbo.StudentGroups", new[] { "TeacherId" });
             DropIndex("dbo.TestPatterns", new[] { "TeacherId" });
             DropIndex("dbo.TestPatterns", new[] { "StudentGroupId" });
             DropIndex("dbo.TestPatterns", new[] { "AreaId" });
             DropIndex("dbo.Questions", new[] { "AreaId" });
             DropIndex("dbo.Answers", new[] { "QuestionId" });
-            DropTable("dbo.StudentStudentGroups");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
@@ -287,6 +287,7 @@ namespace DAL.Migrations
             DropTable("dbo.SolutionAnswers");
             DropTable("dbo.Solutions");
             DropTable("dbo.Students");
+            DropTable("dbo.Enrollments");
             DropTable("dbo.StudentGroups");
             DropTable("dbo.TestPatterns");
             DropTable("dbo.Areas");

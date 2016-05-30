@@ -11,33 +11,24 @@ using System.Data.Entity;
 namespace BusinessLayer.Facades
 {
     public class SolutionFacade
-    {
-        //public Solution solution = new Solution();
-
-        //zkontroluje, zda student muze s testem pracovat
-        private bool CheckIsNotDone(SolutionDTO solution)
-        {
-            var newSolution = Mapping.Mapper.Map<Solution>(solution);
-            int time = Convert.ToInt32(newSolution.End - newSolution.Start);
-            return ((time < newSolution.TestPattern.Time) && 
-                    (DateTime.Now.Date < newSolution.TestPattern.End) &&
-                    (!newSolution.IsDone));  
-        }
-
-        private bool CheckIsNotDone(Solution solution)
-        {
-            int time = Convert.ToInt32(solution.End - solution.Start);
-            return ((time < solution.TestPattern.Time) &&
-                    (DateTime.Now.Date < solution.TestPattern.End) &&
-                    (!solution.IsDone));
-        }
-
+    {        
         public SolutionDTO CreateSolution(SolutionDTO solution)
         {
             var newSolution = Mapping.Mapper.Map<Solution>(solution);
             
-            newSolution.Start = DateTime.Now.Date;
+            newSolution.Start = DateTime.Now;
             newSolution.IsDone = false;
+
+            if(newSolution.Student.Id != 0)
+            {
+                newSolution.StudentId = newSolution.Student.Id;
+                newSolution.Student = null;
+            }
+            if (newSolution.TestPattern.Id != 0)
+            {
+                newSolution.TestPatternId = newSolution.TestPattern.Id;
+                newSolution.TestPattern = null;
+            }
 
             using (var context = new AppDbContext())
             {
@@ -51,16 +42,13 @@ namespace BusinessLayer.Facades
         
         public int GetPoints(SolutionDTO solution)
         {
-            if (!CheckIsNotDone(solution))
-                throw new InvalidOperationException("The Test is not finished yet.");
-
             int result = 0;
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var solutionAnswers = solution.SolutionAnswers;
+                List<SolutionAnswerDTO> solutionAnswers = solution.SolutionAnswers;
 
-                foreach(var solutionAnswer in solutionAnswers)
+                foreach(SolutionAnswerDTO solutionAnswer in solutionAnswers)
                 {
                     if (solutionAnswer != null && solutionAnswer.Answer.IsCorrect)
                         result += solutionAnswer.Answer.Question.PointsForCorrectAnswer;
@@ -71,14 +59,14 @@ namespace BusinessLayer.Facades
 
         public void AddAnswer(SolutionAnswerDTO solutionAnswer, int solutionId)
         {
-            var newAnswer = Mapping.Mapper.Map<SolutionAnswer>(solutionAnswer);
+            SolutionAnswer newAnswer = Mapping.Mapper.Map<SolutionAnswer>(solutionAnswer);
 
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var solution = context.Solution.Find(solutionId);
-                if (CheckIsNotDone(solution))
-                    throw new InvalidOperationException("The Test is finished");
+                Solution solution = context.Solution.Find(solutionId);
+                //if (CheckIsNotDone(solution))
+                //    throw new InvalidOperationException("The Test is finished");
 
                 solution.SolutionAnswers.Add(newAnswer);
                 context.SaveChanges();
@@ -127,9 +115,7 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var solution = context.Solution.Find(solutionId);
-                if (!CheckIsNotDone(solution))
-                    throw new InvalidOperationException("The Test is finished");
+                var solution = context.Solution.Find(solutionId);                
 
                 solution.SolutionAnswers.RemoveAt(solutionAnswerId);
                 context.SaveChanges();
@@ -141,7 +127,8 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var solution = context.Solution.Find(solutionId);
+                var solution = context.Solution.Include(s => s.Student)
+                    .Include(s => s.TestPattern).SingleOrDefault(s => s.Id == solutionId);
                 return Mapping.Mapper.Map<SolutionDTO>(solution);
             }
         }
@@ -151,13 +138,14 @@ namespace BusinessLayer.Facades
             using (var context = new AppDbContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var solutions = context.Solution
-                        .GroupBy(s => s.Student.StudentGroups)
-                        .Select(g => g.Key.Equals(studentGroupId));
+                var enrollments = context.Enrollment
+                        .Include(e => e.Student.Solutions)
+                        .Where(p => p.StudentGroupId == studentGroupId);
 
                 List<SolutionDTO> results = new List<SolutionDTO>();
-                foreach (var item in solutions)
-                    results.Add(Mapping.Mapper.Map<SolutionDTO>(item));
+                foreach (var enrollment in enrollments)
+                    foreach(var solution in enrollment.Student.Solutions)
+                        results.Add(Mapping.Mapper.Map<SolutionDTO>(solution));
 
                 return results;
             }
@@ -196,9 +184,6 @@ namespace BusinessLayer.Facades
 
         public void FinishSolution(SolutionDTO solution)
         {
-            if (!CheckIsNotDone(solution))
-                throw new InvalidOperationException("The Test is already finished");
-
             solution.IsDone = true;
             solution.End = DateTime.Now.Date;
         }

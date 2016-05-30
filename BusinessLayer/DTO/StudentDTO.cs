@@ -13,7 +13,7 @@ namespace BusinessLayer.DTO
         public StudentDTO()
         {
             Solutions = new List<SolutionDTO>();
-            StudentGroups = new List<StudentGroupDTO>();
+            Enrollments = new List<EnrollmentDTO>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "Please fill out your First Name")]
@@ -21,6 +21,6 @@ namespace BusinessLayer.DTO
         [Required(ErrorMessage = "Please fill out your Surname")]
         public string Surname { get; set; }
         public List<SolutionDTO> Solutions { get; set; }
-        public List<StudentGroupDTO> StudentGroups { get; set; }
+        public List<EnrollmentDTO> Enrollments { get; set; }
     }
 }

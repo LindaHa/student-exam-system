@@ -14,6 +14,7 @@ namespace WebApp.Models
         public int Id { get; set; }
         public bool isSelected { get; set; }
         public string Text { get; set; }
+        public bool isCorrect { get; set; }
     }
 
     public class SolutionQuestionModel
@@ -27,7 +28,7 @@ namespace WebApp.Models
         public string Text { get; set; }
         public string Explanation { get; set; }
         public string TypeOfQuestion { get; set; }
-        public int SelectedAnswerID { get; set; }
+        public int SelectedAnswerId { get; set; }
     }
 
     public class SolutionModel
@@ -36,7 +37,13 @@ namespace WebApp.Models
         {
             Questions = new List<SolutionQuestionModel>();
         }
-        public int Id { get; set; }
+        public int SolutionId { get; set; }
+        public DateTime End { get; set; }
+        public DateTime Start { get; set; }
         public List<SolutionQuestionModel> Questions { get; set; }
+        public int Points { get; set; }
+        public string StudentName { get; set; }
+
+
     }
 }

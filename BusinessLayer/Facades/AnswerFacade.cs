@@ -89,7 +89,7 @@ namespace BusinessLayer.Facades
         {
             using (var context = new AppDbContext())
             {
-                var answer = context.Answer
+                Answer answer = context.Answer
                     .Include(a => a.Question)
                     .SingleOrDefault(x => x.Id == answerId);
                 return Mapping.Mapper.Map<AnswerDTO>(answer);

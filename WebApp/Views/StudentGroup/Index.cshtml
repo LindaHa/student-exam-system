@@ -33,6 +33,10 @@
 				@Html.ActionLink("Show Details", "Show", new { id = item.Id }) |
 				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
 				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+				@if (User.IsInRole("Admin, Student"))
+				{
+					@Html.ActionLink("Join", "Show", new { id = item.Id })
+				}
 			</td>
 		</tr>
 	}

@@ -14,7 +14,7 @@ namespace DAL.Entity
         public Student()
         {
             Solutions = new List<Solution>();
-            StudentGroups = new List<StudentGroup>();
+            Enrollments = new List<Enrollment>();
         }
 
         [Required]
@@ -23,7 +23,7 @@ namespace DAL.Entity
         public string FirstName { get; set; }
         [Required]
         public string Surname { get; set; }
-        public List<StudentGroup> StudentGroups { get; set; }
+        public List<Enrollment> Enrollments { get; set; }
         public List<Solution> Solutions { get; set; }
 
 

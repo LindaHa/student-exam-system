@@ -72,6 +72,7 @@
     <Compile Include="DTO\QuestionDTO.cs" />
     <Compile Include="DTO\SolutionAnswerDTO.cs" />
     <Compile Include="DTO\SolutionDTO.cs" />
+    <Compile Include="DTO\EnrollmentDTO.cs" />
     <Compile Include="DTO\SolutionQuestionDTO.cs" />
     <Compile Include="DTO\StudentDTO.cs" />
     <Compile Include="DTO\StudentGroupDTO.cs" />
